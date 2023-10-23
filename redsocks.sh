@@ -8,8 +8,6 @@ sed -e "s|\${proxy_ip}|${proxy_ip}|" \
 echo "Generated configuration:"
 cat /tmp/redsocks.conf
 
-echo "Activating iptables rules..."
-/usr/local/bin/redsocks-fw.sh start
 
 pid=0
 
@@ -24,7 +22,6 @@ term_handler() {
         echo "Term signal catched. Shutdown redsocks and disable iptables rules..."
         kill -SIGTERM "$pid"
         wait "$pid"
-        /usr/local/bin/redsocks-fw.sh stop
     fi
     exit 143; # 128 + 15 -- SIGTERM
 }
